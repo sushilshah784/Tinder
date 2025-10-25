@@ -1,11 +1,24 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import 'react-native-gesture-handler';
+import 'react-native-reanimated';
+import React, { useEffect } from 'react';
+import { RecoilRoot } from 'recoil';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AppNavigator from './src/navigation/AppNavigator';
+import SplashScreen from 'react-native-splash-screen';
+
+const queryClient = new QueryClient();
 
 export default function App() {
+
+  useEffect(() => {
+    SplashScreen.hide(); // hides splash screen after app loads
+  }, []);
+
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Hello, Tinder!</Text>
-    </SafeAreaView>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <AppNavigator />
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 }
